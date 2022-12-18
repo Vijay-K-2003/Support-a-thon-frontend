@@ -1,39 +1,32 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
+
 import Sidebar from "../Sidebar/Sidebar";
 import { useAuthContext } from "../../context/AuthProvider";
 import Speech from "../Speech/Speech";
 import "./Homepage.scss";
-import axios from 'axios';
+import axios from "axios";
 
 const Homepage = () => {
   const [details, setDetails] = useState(null);
-  const { auth } = useAuthContext();
+  const { auth, qId } = useAuthContext();
   // https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/
-  
-  /**
-   * email
-: 
-"vijay@gmail.com"
-fillerPhrases
-: 
-"['I mean']"
-fillerWords
-: 
-"['um', 'Like']"
-id
-: 
-1
-questionID
-: 
-1
-recommendation
-: 
-"We would like to mention that it would be better if you avoid mentioning about tiktok and instagram in your interview.It would be further better if you could mention about your Github profile in the interview."
-wpm
-: 
-168
-   */
+  const [active, setActive] = useState(-1);
 
+  if (!auth) {
+    return (
+      <div className="Home">
+        <div className="message">
+          First <Link to="/login">Login</Link> to try this feature
+        </div>
+      </div>
+    );
+  }
+
+  console.log(details);
+
+  let fillerWords;
   return (
     <div className="Home">
       <div className="leftside">
@@ -41,21 +34,65 @@ wpm
       </div>
       <div className="rightside">
         <div className="mic__wrapper">
-          <Speech setDetails = {setDetails}/>
+          <Speech setDetails={setDetails} />
         </div>
         <div className="data__wrapper">
-          <h2>Your Last Attempt Stats</h2>
-          <div className="data__wrapper--stat">
-            <ul>
-              <li>
-                {details?.data[0].questionID}
-              </li>
-              <li>{details?.data[0].fillerPhrases}</li>
-              <li>
-                {details?.data[0].fillerWords}
-              </li>
-            </ul>
-          </div>
+          <h2>Your Previous Attempt Stats</h2>
+          {details?.data?.map((data, index) => {
+            return (
+              <div key={index} className="data__display">
+                <div key={index + 1} className="data__display--header">
+                  <p>Attempt {index + 1}</p>
+                  <RiArrowDropDownLine
+                    onClick={() => {
+                      if (active === -1) {
+                        setActive(index);
+                      }
+
+                      if (active === index) {
+                        setActive(-1);
+                      }
+                    }}
+                    size={25}
+                  />
+                </div>
+                <div className="data__info">
+                  {active === index && (
+                    <div>
+                      <p>
+                        <strong>Email :</strong> {data.email}
+                      </p>
+                      <p>
+                        <strong>Question Id:</strong> {data.questionID}
+                      </p>
+                      <p>
+                        <strong>Recomendation:</strong> {data.recommendation}
+                      </p>
+                      <p style={{ display: "flex", gap: "10px" }}>
+                        <strong>Filler Words: </strong>
+                        {JSON.parse(data.fillerWords.replace(/'/g, '"')).map(
+                          (word, index) => (
+                            <p key={index + 1}>{word} </p>
+                          )
+                        )}
+                      </p>
+                      <p style={{ display: "flex", gap: "10px" }}>
+                        <strong>Filler Phrases: </strong>
+                        {JSON.parse(data.fillerPhrases.replace(/'/g, '"')).map(
+                          (word, index) => (
+                            <p key={index + 1}>{word} </p>
+                          )
+                        )}
+                      </p>
+                      <p>
+                        <strong>Words per minute: </strong> {data.wpm}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

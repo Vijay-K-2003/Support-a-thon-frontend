@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./Speech.scss";
 import { useAuthContext } from "../../context/AuthProvider";
 import micIcon from "../../assets/mic_icon.png";
-import axios from 'axios';
+import axios from "axios";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -30,11 +30,13 @@ function Timer(props) {
 
 const Speech = (props) => {
   const [isListening, setIsListening] = useState(false);
-  const [note, setNote] = useState("lorem ipsum like um he hello I meant Instagram and Linkedin and Twitter tiktok");
+  const [note, setNote] = useState(
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum quasi perferendis culpa hic tenetur minus eveniet quas animi. Laudantium!"
+  );
   const [savedNotes, setSavedNotes] = useState([]);
   const [time, setTime] = useState(0);
-  const {auth, qId} = useAuthContext();
-  const {setDetails} = props;
+  const { auth, qId } = useAuthContext();
+  const { setDetails } = props;
 
   useEffect(() => {
     handleListen();
@@ -98,20 +100,24 @@ const Speech = (props) => {
     getDetails();
     setSavedNotes((prevNotes) => [...prevNotes, note]);
     setNote("");
+    console.log(typeof time, time);
     setTime(0);
   };
 
   const getDetails = async () => {
-    const data = await axios.post( "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/getDetails", {
-      "key": "73627",
-      "questionID": qId,
-      "email": "vijay@gmail.com",
-      "timeDuration" : time,
-      "text": "lorem ipsum like um he hello I meant Instagram and Linkedin and Twitter tiktok"
-    })
+    const data = await axios.post(
+      "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/getDetails",
+      {
+        key: "73627",
+        questionID: qId,
+        email: "vijay@gmail.com",
+        timeDuration: time / 1000,
+        text: note,
+      }
+    );
     console.log(data);
     setDetails(data);
-  }
+  };
 
   return (
     <div className="wrapper">

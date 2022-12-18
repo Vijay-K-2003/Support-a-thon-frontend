@@ -4,13 +4,21 @@
   width: 1396px;
   max-width: 100%;
   height: calc(100vh - 40px);
-  background: #fff;
+  background: rgba(0, 0, 0, 0.16);
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   display: flex;
 }
 
 //   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.06),
 //     0 12px 15px 0 rgba(0, 0, 0, 0.06);
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
 
 .Home .leftside {
   // position: relative;
@@ -41,5 +49,30 @@
 }
 
 .data__wrapper {
-  height: 300px;
+  width: 100%;
+  padding: 1rem 1.3rem;
+
+  h2 {
+    margin-bottom: 15px;
+  }
+}
+
+.data__display {
+  width: 100%;
+  background-color: #fff;
+  padding: 7px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: none;
+
+  .data__display--header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 1rem;
+  }
 }
