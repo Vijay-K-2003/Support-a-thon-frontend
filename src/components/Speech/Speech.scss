@@ -6,15 +6,16 @@
 
 .container {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 20px;
+  gap: 7px;
+  padding: 10px;
 
   .mic__container {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: white;
     display: flex;
@@ -31,9 +32,10 @@
 
 .buttons_wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
-  gap: 10px;
+  align-items: center;
+  gap: 5px;
 
   .stop_watch {
     font-size: 12px;
