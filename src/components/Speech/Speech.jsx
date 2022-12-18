@@ -106,13 +106,18 @@ const Speech = (props) => {
 
   const getDetails = async () => {
     const data = await axios.post(
-      "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/getDetails",
+      "https://c834-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/getDetails",
       {
         key: "73627",
         questionID: qId,
         email: "vijay@gmail.com",
         timeDuration: time / 1000,
         text: note,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
     );
     console.log(data);
