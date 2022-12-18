@@ -16,7 +16,7 @@ const Homepage = () => {
 
   if (!auth) {
     return (
-      <div className="Home">
+      <div className="Home_second">
         <div className="message">
           First <Link to="/login">Login</Link> to try this feature
         </div>

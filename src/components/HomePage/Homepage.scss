@@ -4,13 +4,24 @@
   width: 1396px;
   max-width: 100%;
   height: calc(100vh - 40px);
-  background: rgba(0, 0, 0, 0.16);
+  background: #fff;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   display: flex;
 }
 
 //   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.06),
 //     0 12px 15px 0 rgba(0, 0, 0, 0.06);
+
+.Home__second {
+  z-index: 100;
+  position: relative;
+  width: 1396px;
+  max-width: 100%;
+  height: calc(100vh - 40px);
+  background: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+}
 
 .message {
   position: absolute;
