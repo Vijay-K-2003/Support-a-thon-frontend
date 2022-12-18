@@ -11,17 +11,18 @@ import axios from "axios";
 
 import "./Register.scss";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/create";
+const REGISTER_URL =
+  "https://0867-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/create";
 
 const Register = () => {
-  const userRef = useRef();
+  const emailRef = useRef();
   const errRef = useRef();
 
   const [email, setEmail] = useState("");
-  const [validName, setValidName] = useState(true);
-  const [userFocus, setUserFocus] = useState(false);
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -35,12 +36,12 @@ const Register = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
-  // useEffect(() => {
-     // setValidName(USER_REGEX.test(user));
-  // }, [user]);
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -54,10 +55,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //if button enabled with JS hack
-    // const v1 = USER_REGEX.test(email);
+    const v1 = EMAIL_REGEX.test(email);
     const v2 = PWD_REGEX.test(pwd);
-    // if (!v1 || !v2) {
-      if(!v2) {
+    if (!v1 || !v2) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -84,7 +84,7 @@ const Register = () => {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+        setErrMsg("Email Taken");
       } else {
         setErrMsg("Registration Failed");
       }
@@ -157,38 +157,36 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">
               Email:
-              <span className={validName ? "valid" : "hide"}>
+              <span className={validEmail ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validName ? "hide" : "invalid"}>
+              <span className={validEmail || !email ? "hide" : "invalid"}>
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
             <input
               type="email"
               id="email"
-              ref={userRef}
+              ref={emailRef}
               autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
-              aria-invalid={validName ? "false" : "true"}
+              aria-invalid={validEmail ? "false" : "true"}
               aria-describedby="uidnote"
-              onFocus={() => setUserFocus(true)}
-              onBlur={() => setUserFocus(false)}
+              onFocus={() => setEmailFocus(true)}
+              onBlur={() => setEmailFocus(false)}
             />
             <p
               id="uidnote"
               className={
-                userFocus && !validName ? "instructions" : "offscreen"
+                emailFocus && email && !validEmail
+                  ? "instructions"
+                  : "offscreen"
               }
             >
               <FontAwesomeIcon icon={faInfoCircle} />
-              4 to 24 characters.
-              <br />
-              Must begin with a letter.
-              <br />
-              Letters, numbers, underscores, hyphens allowed.
+              Not a valid Email format
             </p>
 
             <div className="password_header">
@@ -284,7 +282,7 @@ const Register = () => {
             </p>
 
             <button
-              disabled={!validName || !validPwd || !validMatch ? true : false}
+              disabled={!validEmail || !validPwd || !validMatch ? true : false}
             >
               Sign Up
             </button>

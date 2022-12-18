@@ -12,7 +12,7 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from.pathname || "/";
 
-  const userRef = useRef();
+  const emailRef = useRef();
   const errRef = useRef();
 
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
-    userRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault(); //prevent reloading
     try {
       const response = await axios.post(
-        "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/authenticate",
+        "https://0867-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/authenticate",
         JSON.stringify({ email, pwd }),
         {
           headers: { "Content-Type": "application/json" },
@@ -42,14 +42,14 @@ const Login = () => {
       //   console.log(JSON.stringify(response));
 
       setAuth({ email, pwd });
-      setUser("");
+      setEmail("");
       setPwd("");
-      navigate(from, { replace: true });
+      navigate("/");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg("Missing Email or Password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
@@ -95,7 +95,7 @@ const Login = () => {
         <input
           type="email"
           id="email"
-          ref={userRef}
+          ref={emailRef}
           autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
           value={email}

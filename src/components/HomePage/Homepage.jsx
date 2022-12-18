@@ -15,15 +15,15 @@ const Homepage = () => {
   // https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/
   const [active, setActive] = useState(-1);
 
-  // if (!auth) {
-  //   return (
-  //     <div className="Home_second">
-  //       <div className="message">
-  //         First <Link to="/login">Login</Link> to try this feature
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!auth) {
+    return (
+      <div className="Home_second">
+        <div className="message">
+          First <Link to="/login">Login</Link> to try this feature
+        </div>
+      </div>
+    );
+  }
 
   console.log(details);
 
@@ -55,14 +55,14 @@ const Homepage = () => {
           <h2>Your Previous Attempt Stats</h2>
           {details?.data?.map((data, index) => {
             if (qId === data.questionID) {
-              if (index < 3) {
+              if (index < 12) {
                 return (
                   <div key={index} className="data__display">
                     <div key={index + 1} className="data__display--header">
                       <p>Attempt {index + 1}</p>
                       <RiArrowDropDownLine
                         onClick={() => {
-                          if (active === -1) {
+                          if (active === -1 || active !== index) {
                             setActive(index);
                           }
 
