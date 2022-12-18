@@ -1,25 +1,58 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .container {
-  margin: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.box {
-  box-shadow: -4px 10px 35px -1px rgba(0, 0, 0, 0.75);
-  min-height: 20rem;
-  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   padding: 20px;
-  border-radius: 5px;
+
+  .mic__container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    img {
+      width: 50%;
+      object-fit: contain;
+    }
+  }
 }
 
-h1 {
-  margin-left: 20px;
-}
+.buttons_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
 
-button {
-  float: right;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background: transparent;
+  .stop_watch {
+    font-size: 12px;
+    border: none;
+    float: right;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: white;
+    color: black;
+  }
+
+  button {
+    font-size: 12px;
+    border: 1px solid black;
+    float: right;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: transparent;
+  }
 }

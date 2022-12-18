@@ -49,21 +49,29 @@
   display: flex;
   gap: 5px;
   span {
-    display: inline-block;
+    font-weight: 500;
   }
   &:hover {
     color: rgb(61, 61, 168);
     cursor: pointer;
-    div {
-      display: inline-block;
-    }
   }
 }
 
-// .active {
-//   color: #fff;
-//   cursor: pointer;
-//   div {
-//     display: inline-block;
-//   }
-// }
+.active {
+  font-size: 16px;
+  padding: 8px 5px 8px 15px;
+  background-color: rgb(61, 61, 168);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  span {
+    font-weight: 500;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}

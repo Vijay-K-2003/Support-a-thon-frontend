@@ -16,12 +16,26 @@
   // position: relative;
   flex: 30%;
   background: rgba(0, 0, 0, 0.16);
-  //border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .App .rightside {
   // position: relative;
   flex: 70%;
   //   background: #e5ddd5;
-  background: green;
+  background: rgba(0, 0, 0, 0.26);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.mic__wrapper,
+.data__wrapper {
+  width: 70%;
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }

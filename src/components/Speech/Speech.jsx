@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Speech.scss";
+import micIcon from "../../assets/mic_icon.png";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -9,13 +10,45 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "en-US";
 
+function Timer(props) {
+  return (
+    <div className="timer">
+      <span className="digits">
+        {("0" + Math.floor((props.time / 60000) % 60)).slice(-2)}:
+      </span>
+      <span className="digits">
+        {("0" + Math.floor((props.time / 1000) % 60)).slice(-2)}.
+      </span>
+      <span className="digits mili-sec">
+        {("0" + ((props.time / 10) % 100)).slice(-2)}
+      </span>
+    </div>
+  );
+}
+
 const Speech = () => {
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState(null);
   const [savedNotes, setSavedNotes] = useState([]);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
     handleListen();
+  }, [isListening]);
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isListening) {
+      interval = setInterval(() => {
+        setTime((time) => time + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
   }, [isListening]);
 
   const handleListen = () => {
@@ -48,38 +81,44 @@ const Speech = () => {
     };
   };
 
+  const handleStartStop = () => {
+    if (isListening) {
+      setIsListening(false);
+    } else {
+      setIsListening(true);
+    }
+  };
+
   const handleSaveNote = () => {
     setSavedNotes((prevNotes) => [...prevNotes, note]);
     setNote("");
+    setTime(0);
   };
 
   return (
-    <>
-      <h1>Voice Notes</h1>
+    <div className="wrapper">
       <div className="container">
-        <div className="box">
-          <h2>Current Note</h2>
+        <div className="mic__container">
+          <img src={micIcon} alt="mic" />
+        </div>
+        <div>
           {isListening ? (
             <span>🎙 Listening...</span>
           ) : (
             <span>🛑 Click Start...</span>
           )}
-          <button onClick={handleSaveNote} disabled={!note}>
-            Save the Note
-          </button>
-          <button onClick={() => setIsListening((prevState) => !prevState)}>
-            Start/Stop
-          </button>
-          <p>{note}</p>
-        </div>
-        <div className="box">
-          <h2>Notes</h2>
-          {savedNotes.map((n, index) => (
-            <p key={index}>{n}</p>
-          ))}
         </div>
       </div>
-    </>
+      <div className="buttons_wrapper">
+        <div className="stop_watch">
+          <Timer time={time} />
+        </div>
+        <button onClick={handleSaveNote} disabled={!note}>
+          Save the Note
+        </button>
+        <button onClick={handleStartStop}>Start/Stop</button>
+      </div>
+    </div>
   );
 };
 

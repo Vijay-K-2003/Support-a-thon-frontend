@@ -27,7 +27,9 @@ function Sidebar() {
             ? generalQuestions.map((question, index) => (
                 <li
                   key={question.question}
-                  className="sidenav__wrapper--link"
+                  className={`${
+                    qId === question.id ? "active" : "sidenav__wrapper--link"
+                  }`}
                   onClick={() => setQId(question.id)}
                 >
                   <div>{index + 1}. </div>
@@ -37,7 +39,9 @@ function Sidebar() {
             : softwareQuestions.map((question, index) => (
                 <li
                   key={question.question}
-                  className="sidenav__wrapper--link"
+                  className={`${
+                    qId === question.id ? "active" : "sidenav__wrapper--link"
+                  }`}
                   onClick={() => setQId(question.id)}
                 >
                   <div>{index + 1}. </div>
