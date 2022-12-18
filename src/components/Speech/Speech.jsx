@@ -30,9 +30,7 @@ function Timer(props) {
 
 const Speech = (props) => {
   const [isListening, setIsListening] = useState(false);
-  const [note, setNote] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel cum quasi perferendis culpa hic tenetur minus eveniet quas animi. Laudantium!"
-  );
+  const [note, setNote] = useState("");
   const [savedNotes, setSavedNotes] = useState([]);
   const [time, setTime] = useState(0);
   const { auth, qId } = useAuthContext();
@@ -106,17 +104,17 @@ const Speech = (props) => {
 
   const getDetails = async () => {
     const data = await axios.post(
-      "https://c834-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/getDetails",
+      "https://0867-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/doTextAnalysis",
       {
         key: "73627",
         questionID: qId,
-        email: "vijay@gmail.com",
+        email: "abhay@gmail.com",
         timeDuration: time / 1000,
         text: note,
       },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       }
     );
