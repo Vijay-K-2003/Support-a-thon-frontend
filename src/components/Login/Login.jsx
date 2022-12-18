@@ -3,7 +3,6 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 import { useAuthContext } from "../../context/AuthProvider";
-const LOGIN_URL = "/auth";
 import "./Login.scss";
 
 const Login = () => {
@@ -16,7 +15,7 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
@@ -26,14 +25,14 @@ const Login = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd]);
+  }, [email, pwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); //prevent reloading
     try {
       const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ user, pwd }),
+        "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/authenticate",
+        JSON.stringify({ email, pwd }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -42,7 +41,7 @@ const Login = () => {
       console.log(JSON.stringify(response?.data));
       //   console.log(JSON.stringify(response));
 
-      setAuth({ user, pwd });
+      setAuth({ email, pwd });
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
@@ -82,7 +81,7 @@ const Login = () => {
   };
 
   return (
-    <main>
+    <main className="login">
       <p
         ref={errRef}
         className={errMsg ? "errmsg" : "offscreen"}
@@ -92,14 +91,14 @@ const Login = () => {
       </p>
       <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="email">Email:</label>
         <input
-          type="text"
-          id="username"
+          type="email"
+          id="email"
           ref={userRef}
           autoComplete="off"
-          onChange={(e) => setUser(e.target.value)}
-          value={user}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           required
         />
 

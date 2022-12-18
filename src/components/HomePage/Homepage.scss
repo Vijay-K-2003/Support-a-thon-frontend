@@ -1,4 +1,4 @@
-.App {
+.Home {
   z-index: 100;
   position: relative;
   width: 1396px;
@@ -12,14 +12,14 @@
 //   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.06),
 //     0 12px 15px 0 rgba(0, 0, 0, 0.06);
 
-.App .leftside {
+.Home .leftside {
   // position: relative;
   flex: 30%;
   background: rgba(0, 0, 0, 0.16);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.App .rightside {
+.Home .rightside {
   // position: relative;
   flex: 70%;
   //   background: #e5ddd5;
@@ -38,4 +38,8 @@
   background-color: rgba(0, 0, 0, 0.16);
   border-radius: 20px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.data__wrapper {
+  height: 300px;
 }

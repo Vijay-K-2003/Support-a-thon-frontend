@@ -13,14 +13,14 @@ import "./Register.scss";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/register";
+const REGISTER_URL = "https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/api/create";
 
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
+  const [email, setEmail] = useState("");
+  const [validName, setValidName] = useState(true);
   const [userFocus, setUserFocus] = useState(false);
 
   const [pwd, setPwd] = useState("");
@@ -38,9 +38,9 @@ const Register = () => {
     userRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
+  // useEffect(() => {
+     // setValidName(USER_REGEX.test(user));
+  // }, [user]);
 
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
@@ -49,14 +49,15 @@ const Register = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd]);
+  }, [email, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     //if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
+    // const v1 = USER_REGEX.test(email);
     const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
+    // if (!v1 || !v2) {
+      if(!v2) {
       setErrMsg("Invalid Entry");
       return;
     }
@@ -65,7 +66,7 @@ const Register = () => {
     try {
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ user, pwd }),
+        JSON.stringify({ email, pwd }),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -76,7 +77,7 @@ const Register = () => {
       // console.log(JSON.stringify(response));
       setSuccess(true);
       //clear state and controlled inputs
-      setUser("");
+      setEmail("");
       setPwd("");
       setMatchPwd("");
     } catch (err) {
@@ -154,22 +155,22 @@ const Register = () => {
           </p>
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="username">
-              Username:
+            <label htmlFor="email">
+              Email:
               <span className={validName ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>
-              <span className={validName || !user ? "hide" : "invalid"}>
+              <span className={validName ? "hide" : "invalid"}>
                 <FontAwesomeIcon icon={faTimes} />
               </span>
             </label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               ref={userRef}
               autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
               aria-invalid={validName ? "false" : "true"}
               aria-describedby="uidnote"
@@ -179,7 +180,7 @@ const Register = () => {
             <p
               id="uidnote"
               className={
-                userFocus && user && !validName ? "instructions" : "offscreen"
+                userFocus && !validName ? "instructions" : "offscreen"
               }
             >
               <FontAwesomeIcon icon={faInfoCircle} />
