@@ -15,15 +15,15 @@ const Homepage = () => {
   // https://e9b8-2405-201-2010-5080-714f-def4-fb26-d729.in.ngrok.io/
   const [active, setActive] = useState(-1);
 
-  if (!auth) {
-    return (
-      <div className="Home_second">
-        <div className="message">
-          First <Link to="/login">Login</Link> to try this feature
-        </div>
-      </div>
-    );
-  }
+  // if (!auth) {
+  //   return (
+  //     <div className="Home_second">
+  //       <div className="message">
+  //         First <Link to="/login">Login</Link> to try this feature
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   console.log(details);
 
